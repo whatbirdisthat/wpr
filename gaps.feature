@@ -14,6 +14,7 @@ Feature: Gaps
     And a "gap" has "filenane" type "string"
     And a "gap" has "duration" type "int"
     And a "gap" has "resume point" type "int"
+    And a "gap" has a "playback duration" type "int"
     And a "gap" has "sequence index" type "int"
     Then multiple gaps can be stored in a sortable array
 
@@ -23,7 +24,7 @@ Feature: Gaps
     Given a sortable set of "10" "Gap" objects
     And "5" of the sortable set have the same "sequence index"
     When the set is sorted
-    Then gaps with matching "sequence id" are sorted according to "resume point"
+    Then gaps with matching "sequence id" are sorted according to "filenane" then "resume point"
 
   Scenario: A Gap with undefined resume point will coerce to 0
 
@@ -32,7 +33,7 @@ Feature: Gaps
     Then "resume point" has the value of "0"
 
 
-  Scenario Outline: A bunch of gaps are checked for validity ...or are they?
+  Scenario Outline: Validate gaps contract
     Given a set of gaps
     And target audio with a duration of "100"
     And <resume_point> is less than "100"

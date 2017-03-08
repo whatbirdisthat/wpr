@@ -1,11 +1,19 @@
 Feature: Nonlinear Playback Scheduling
 
   Take a set of "Gaps"
-  Control the playback of an audio stream
-  Play back a portion of the audio stream from "in-point" until "duration"
+
+  Playback an audio stream
+
+  Wait for "duration" (milli)seconds
+  Play back a portion of the audio stream from "in-point"
 
   Program a "playlist" of pauses
-  Playback the file with the pauses inserted
+  Playback the file(s) with the pauses inserted
+
+  FOR each gap
+    1.  WAIT for 'duration'
+    2.  PLAYBACK the audio from the 'resume point'
+    3.  WAIT until 'playback duration' has elapsed
 
   Background:
     Given the types
@@ -29,3 +37,11 @@ Feature: Nonlinear Playback Scheduling
     Then the playback api can provide a portion of the audio
     And the provided portion beginning matches that of <gap> "in-point"
     And the provided portion duration matches <gap> calculated duration
+
+    Scenario: Setting a gap with duration longer than that available
+      will be played out as silence.
+
+      Given an audio file of length 100
+      And a Gap with "playback duration" greater than "100"
+      Then the api will play to the end of the audio
+      And the time remainder will be played as silence
