@@ -5,40 +5,42 @@ Feature: Gaps
 
   Gaps must be arrangeable (sortable?).
 
-  Let: the length of the single audio file be hard-coded to 100.
+  Let: the length of the test audio file be hard-coded to 100.
 
   Background:
     Given an audio file of length "100"
     And there are "types"
     When  there is a "gap" type "object"
-    And a gap has a "duration" type "int"
-    And a gap has a "resume point" type "int"
-    And a gap has a "unique sequence index" type "int"
+    And a "gap" has "filenane" type "string"
+    And a "gap" has "duration" type "int"
+    And a "gap" has "resume point" type "int"
+    And a "gap" has "sequence index" type "int"
     Then multiple gaps can be stored in a sortable array
 
+  Scenario: A sortable array of Gap object containing multiple occurrences
+  of the same "sequence index"
 
-  Scenario: User arranges a sequence of user defined gaps
-  during playback of a given audio file
+    Given a sortable set of "10" "Gap" objects
+    And "5" of the sortable set have the same "sequence index"
+    When the set is sorted
+    Then gaps with matching "sequence id" are sorted according to "resume point"
 
-  Scenario Outline: A bunch of gaps are checked for validity
+  Scenario: A Gap with undefined resume point will coerce to 0
+
+    Given a gap
+    When the gap does not define a "resume point"
+    Then "resume point" has the value of "0"
+
+
+  Scenario Outline: A bunch of gaps are checked for validity ...or are they?
     Given a set of gaps
-    And a single audio file
+    And target audio with a duration of "100"
     And <resume_point> is less than "100"
     And <resume_point> is greater than 0
-    Then the <is valid> should be valid
+    Then the <is valid> should be "true"
 
     Examples:
       | duration | resume point | index | is valid | why            |
       | 10       | 91           | 1     | true     | duration < 100 |
       | 101      | 1            | 2     | false    | duration > 100 |
       | 101      | 1            | 2     | false    | duration > 100 |
-
-
-    Given a gap
-    When the gap does not define a "resume point"
-    Then "resume point" has the value of "0"
-
-    Given an audio file contains segments of sound
-    When a gap is desired between segments of a single audio file
-    Then the calculated duration of the gap is from user input
-
