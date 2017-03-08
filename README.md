@@ -1,16 +1,6 @@
 Meditation Scheduler
 
-Background
-    Given a gap
-    And a gap has a duration
-    Then multiple gaps can be stored
+    As a meditation tape listener
+    I want to insert a gap of silence between two points in an audio stream
+    So I can create a playback sequence that periodically plays each segment
 
-    And 
-
-Given an audio file contains segments of sound
-When a gap is desired between segments of a single audio file
-Then the duration of the gap is from user input
-
-Given a sequence of gaps
-And a single audio file
-Then the gaps should not refer to ranges outside those of the audio file
