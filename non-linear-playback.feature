@@ -29,4 +29,3 @@ Feature: Nonlinear Playback Scheduling
     Then the playback api can provide a portion of the audio
     And the provided portion beginning matches that of <gap> "in-point"
     And the provided portion duration matches <gap> calculated duration
-
