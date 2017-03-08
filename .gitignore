@@ -1,3 +1,12 @@
+# Prevent git from tracking jetbrains stuff
+# because of "it should work in any IDE"
+# and a lot of people tune their stuff and
+# just prefer if you don't please
+.idea
+.iml
+# Q: But how do we share run configurations?
+# A: In a secure place that isn't source control
+
 # Created by .ignore support plugin (hsz.mobi)
 ### Node template
 # Logs
